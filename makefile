@@ -18,3 +18,14 @@ runB:
 runC:
 	java -jar ./rmlmapper-*-all.jar  -m characters.rml -o characters.ttl
 	cat characters.ttl
+
+run:
+	java -jar target/rmlmapper-*-all.jar  -m branches.rml -o ./branches.ttl -f ttl branches.json -s ttl
+
+s:
+	# java -jar target/rmlmapper-*-all.jar -m "mapping.rml.ttl" "<LogicalSource1> rml:source \"https://biblio.ugent.be/publication/{publication_id}.json\"; rml:referenceFormulation ql:CSV ."
+	java -jar target/rmlmapper-*-all.jar -m "mapping.rml.ttl" "<LogicalSource1> rml:source \"https://biblio.ugent.be/publication/${publication_id}.json\"; rml:referenceFormulation ql:CSV ."
+
+t:
+	java -jar target/rmlmapper-*-all.jar -m ./mapping2.rml.ttl -o ./out.ttl -p publication_id=8551871
+
