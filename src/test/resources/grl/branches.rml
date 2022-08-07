@@ -1,0 +1,83 @@
+@prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix : <http://example.org/rules/> .
+@prefix grl: <https://www.xanderbank.com/> .
+
+
+
+# ------ Definition of a resource (subject) of type Branch
+:TriplesMap a rr:TriplesMap;
+#<#BranchMapping> 
+rml:logicalSource [ 
+            rml:source "branches.json";
+            rml:referenceFormulation ql:JSONPath ;
+            rml:iterator "$.[*]"
+ ].
+
+:TriplesMap rr:predicateObjectMap [
+  rr:predicate grl:id;
+  rr:objectMap [
+    rml:reference "id"
+  ]
+].
+
+:TriplesMap rr:predicateObjectMap [
+  rr:predicate grl:name;
+  rr:objectMap [
+    rml:reference "name"
+  ]
+].
+
+:TriplesMap rr:predicateObjectMap [
+  rr:predicate grl:description;
+  rr:objectMap [
+    rml:reference "description"
+  ]
+].
+
+:TriplesMap rr:subjectMap [
+  rr:template "https://www.xanderbank.com/branch_{id}"
+].
+
+:TriplesMap rr:subjectMap [
+  rr:class <http://xmlns.com/foaf/0.1/Branch>
+].
+
+:TriplesMap rr:predicateObjectMap [
+  rr:predicate rdf:type;
+  rr:objectMap [
+    rr:constant grl:Branch
+  ]
+].
+
+    # ------ Definition of each Predicate-Object associated with the Branch subject
+#    rr:predicateObjectMap [ rr:objectMap [ rml:reference "$.name" ] ;
+#            # ------ URI predicate
+#            rr:predicate rdfs:label ],
+#                         # ------ JSONPath expression to access the value 
+#        [ rr:objectMap [ rml:reference "$.id" ] ;
+#            rr:predicate <http://simile.mit.edu/2003/10/ontologies/vraCore3#dynasty> ],
+#        [ rr:objectMap [ rml:reference "$.name" ] ;
+#            rr:predicate <http://xmlns.com/foaf/0.1/name> ],
+#        [ rr:objectMap [ rml:reference "$.description" ] ;
+#            #rr:predicate <http://dbpedia.org/ontology/startReign> ],
+#                        # ------ The object is a reference
+#                    # ------ Defining the type of the subject 
+#    rr:subjectMap [ rr:class <http://xmlns.com/foaf/0.1/Person> ;
+#            # ------ Defining the URI of the subject
+#            rr:template "http://ods.dataset.com/Branch/{name}" ] .
+#
+# ------ Another resource definition linked to the Person resource
+#<#PopulatedPlace> rml:logicalSource [ rml:iterator "$.[*].fields" ;
+#            rml:referenceFormulation ql:JSONPath ;
+#            rml:source "roman-emperors.json" ] ;
+#    rr:subjectMap [ rr:class <http://dbpedia.org/ontology/PopulatedPlace> ;
+#            rr:template "http://ods.dataset.com/PopulatedPlace/{birth_cty}" ] ;
+#    rr:predicateObjectMap [ rr:objectMap [ rml:reference "$.birth_cty" ] ;
+#            rr:predicate rdfs:label ].
+
